@@ -74,7 +74,7 @@ export default function EditForm(
                 }
                 <div className="flex flex-col md:flex-row gap-4 mt-6">
                     <Button type="submit">Edit Product</Button>
-                    <Link href='/' className="py-2 px-3 rounded-md bg-gray-300 text-center">Cancel</Link>
+                    <Link href='/dash' className="py-2 px-3 rounded-md bg-gray-300 text-center">Cancel</Link>
                 </div>
             </form>
     )
