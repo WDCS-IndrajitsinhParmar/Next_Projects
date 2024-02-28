@@ -276,3 +276,21 @@ export async function CreateNewUser(prevState:UserState, formData: FormData) {
         }
     }
 }
+
+export async function LoginUser(prevState:any, formData:FormData){
+  const rowData = Object.fromEntries(formData.entries());
+  try {
+    const data = await fetch('https://fakestoreapi.com/auth/login',{
+      method:'POST',
+      body:JSON.stringify({
+          username: "mor_2314",
+          password: "83r5^_"
+      })
+  }).then(res=>res.json()).then(json=>console.log(json));
+  } catch (error) {
+    console.log(error)
+    return{
+      serverError:"Server Error"
+    }
+  }
+}

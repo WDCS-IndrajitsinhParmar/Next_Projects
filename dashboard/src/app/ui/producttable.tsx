@@ -6,7 +6,7 @@ import Link from "next/link";
 export default async function ProductTable() {
   const products = await getProductData();
   return (
-    <table className="w-full hidden md:table bg-gray-50 shadow-md shadow-gray-100 rounded-md">
+    <table className="w-full hidden md:table bg-gray-50 shadow-lg shadow-gray-100 rounded-md">
       <thead>
         <tr>
           <th className="pt-4 pb-2 text-left px-4">Name</th>
