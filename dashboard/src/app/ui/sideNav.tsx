@@ -1,3 +1,4 @@
+import { signOut } from "@/auth";
 import NavLinks from "./navLinks"
 
 export default function SideNav(){
@@ -6,8 +7,12 @@ export default function SideNav(){
             <div className="flex flex-grow md:flex-col gap-2">
                 <NavLinks />
             </div>
-            <form>
-                <p className="px-3 py-2  hover:bg-blue-100 hover:text-blue-600 rounded-md">Sign Out</p>
+            <form
+                action={async()=>{
+                    'use server'
+                    await signOut();
+                }}>
+                <button className="px-3 py-2  hover:bg-blue-100 hover:text-blue-600 rounded-md">Sign Out</button>
             </form>
         </div>
     )

@@ -6,7 +6,7 @@ export default async function UserTable() {
   const users = await getUsers();
 
   return (
-    <table className="w-full hidden md:table bg-gray-50 shadow-md shadow-gray-100 rounded-md">
+    <table className="w-full md:table bg-gray-50 shadow-md shadow-gray-100 rounded-md">
       <thead>
         <tr>
           <th className="pt-4 pb-2 text-left px-4">Name</th>

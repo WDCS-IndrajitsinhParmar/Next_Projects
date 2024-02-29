@@ -3,6 +3,10 @@
 import { z } from "zod";
 import { State, UserState } from "@/app/lib/definition";
 import { revalidatePath } from "next/cache";
+import { cookies } from 'next/headers';
+import { redirect } from "next/navigation";
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
 
 const productSchema = z.object({
   id: z.string(),
@@ -277,20 +281,51 @@ export async function CreateNewUser(prevState:UserState, formData: FormData) {
     }
 }
 
-export async function LoginUser(prevState:any, formData:FormData){
-  const rowData = Object.fromEntries(formData.entries());
+// export async function LoginUser(prevState:unknown, formData:FormData){
+//   const rowData = Object.fromEntries(formData.entries());
+//   try {
+//     const response = await fetch('https://fakestoreapi.com/auth/login', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//           username: "mor_2314",
+//           password: "83r5^_"
+//         }),
+//     }).then(res=>res.json());
+//     const token = response.token;
+//     cookies().set("token",token, {httpOnly:true});
+//   } catch (error) {
+//       console.error(error);
+//       return {
+//           serverError: "Invalid credentials"
+//       };
+//   }
+//   redirect('/dash')
+// }
+
+// export async function SignOutUser(){
+//   cookies().delete('token');
+//   redirect('/login');
+// }
+
+export async function authenticate(prevState: any,formData: FormData,){
   try {
-    const data = await fetch('https://fakestoreapi.com/auth/login',{
-      method:'POST',
-      body:JSON.stringify({
-          username: "mor_2314",
-          password: "83r5^_"
-      })
-  }).then(res=>res.json()).then(json=>console.log(json));
+    await signIn("credentials",formData)
   } catch (error) {
-    console.log(error)
-    return{
-      serverError:"Server Error"
+    if(error instanceof AuthError){
+      switch(error.type){
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
     }
+    throw error;
   }
 }
+
+
+
+
