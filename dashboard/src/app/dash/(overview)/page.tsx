@@ -2,7 +2,6 @@ import ProductTable from "@/app/ui/producttable";
 import { Button } from "@/app/ui/generalButton";
 import Link from "next/link";
 
-
 export default async function Home() {
   return (
     <div className="w-full">
