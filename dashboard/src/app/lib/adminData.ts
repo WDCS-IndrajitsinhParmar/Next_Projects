@@ -52,3 +52,15 @@ export async function fetchProductById(id:string){
         throw new Error("Somthing went wrong")
     }
 }
+
+export async function fetchCart(){
+    try {
+        const data = await fetch('https://fakestoreapi.com/carts')
+                    .then(res=>res.json());
+        console.log(data.products);
+    } catch (error) {
+        console.log(error);
+        throw new Error("Somthing went wrong")
+    }
+}
+

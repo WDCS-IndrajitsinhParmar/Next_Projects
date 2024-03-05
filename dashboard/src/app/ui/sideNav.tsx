@@ -1,11 +1,11 @@
 import { signOut } from "@/auth";
 import NavLinks from "./navLinks"
 
-export default function SideNav(){
+export default function SideNav({links}:{links:any}){
     return (
         <div className="flex h-full md:flex-col p-4">
             <div className="flex flex-grow md:flex-col gap-2">
-                <NavLinks />
+                <NavLinks links={links}/>
             </div>
             <form
                 action={async()=>{

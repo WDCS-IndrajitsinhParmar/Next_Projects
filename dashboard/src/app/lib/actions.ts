@@ -281,34 +281,6 @@ export async function CreateNewUser(prevState:UserState, formData: FormData) {
     }
 }
 
-// export async function LoginUser(prevState:unknown, formData:FormData){
-//   const rowData = Object.fromEntries(formData.entries());
-//   try {
-//     const response = await fetch('https://fakestoreapi.com/auth/login', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//           username: "mor_2314",
-//           password: "83r5^_"
-//         }),
-//     }).then(res=>res.json());
-//     const token = response.token;
-//     cookies().set("token",token, {httpOnly:true});
-//   } catch (error) {
-//       console.error(error);
-//       return {
-//           serverError: "Invalid credentials"
-//       };
-//   }
-//   redirect('/dash')
-// }
-
-// export async function SignOutUser(){
-//   cookies().delete('token');
-//   redirect('/login');
-// }
 
 export async function authenticate(prevState: any,formData: FormData,){
   try {
@@ -325,6 +297,41 @@ export async function authenticate(prevState: any,formData: FormData,){
     throw error;
   }
 }
+
+export async function addToCart(formData:FormData){
+  try {
+    const data = await fetch('https://fakestoreapi.com/carts',{
+                  method:"POST",
+                  body:JSON.stringify(
+                      {
+                          userId:5,
+                          date:"2020-02-03",
+                          products:[{productId:5,quantity:1},{productId:1,quantity:5}]
+                      }
+                  )
+              }).then(res=>res.json())
+    console.log(data)
+    return{
+      message:"Added successfully"
+    }
+  } catch (error) {
+    console.log(error)
+    return{
+      serverError:"Server Error"
+  }
+  }
+}
+
+
+export async function githubLogin(){
+  await signIn("github")
+}
+
+export async function googleLogin(){
+  await signIn("google")
+}
+
+
 
 
 

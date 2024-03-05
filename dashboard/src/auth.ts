@@ -1,6 +1,8 @@
 import NextAuth, { NextAuthConfig } from 'next-auth';
 import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
+import GithubProvider from 'next-auth/providers/github';
+import GoogleProvider from 'next-auth/providers/google';
 import { z } from "zod";
 import { cookies } from 'next/headers';
  
@@ -28,9 +30,30 @@ async function LoginUser(){
     
   }
 
-export const { auth, signIn, signOut } = NextAuth({
+export const { handlers,auth, signIn, signOut } = NextAuth({
   ...authConfig,
-  providers: [Credentials({
+  providers: [
+    GithubProvider({
+      profile(profile){
+        return{
+          ...profile,
+          role:"admin"
+        }
+      },
+      clientId: process.env.GITHUB_ID,
+      clientSecret:process.env.GITHUB_SECRET
+    }),
+    GoogleProvider({
+      profile(profile){
+        return{
+          ...profile,
+          role:"admin"
+        }
+      },
+      clientId: process.env.GOOGLE_ID,
+      clientSecret:process.env.GOOGLE_SECRET
+    }),
+    Credentials({
     name:"credentials",
     async authorize(credentials){
       try {

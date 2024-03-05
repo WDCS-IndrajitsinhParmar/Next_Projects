@@ -4,16 +4,11 @@ import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function NavLinks(){
+export default function NavLinks({links}:{links:any}){
     const pathname = usePathname();
-    const links = [
-        {name:"Products", href:"/dash"},
-        {name:"Users", href:"/dash/users"},
-    ]
-
     return(
         <>
-            {links.map((link)=>{
+            {links?.map((link:any)=>{
                 return(
                        <Link key={link.name} href={link.href}
                             className={clsx('px-3 py-2 hover:bg-blue-100 hover:text-blue-600 rounded-md',

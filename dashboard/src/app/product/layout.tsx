@@ -11,8 +11,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const links = [
-    {name:"Products", href:"/dash"},
-    {name:"Users", href:"/dash/users"},
+    {name:"Home", href:"/product"},
+    {name:"Cart", href:"/product/cart"},
 ]
   return (
     <html lang="en">

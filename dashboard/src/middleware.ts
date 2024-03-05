@@ -14,29 +14,29 @@
  
 import NextAuth from 'next-auth';
 import { authConfig } from './auth.config';
-import { withAuth, NextRequestWithAuth } from "next-auth/middleware"
-import { NextResponse } from "next/server"
 import { auth } from "./auth"
 
-// const {auth} = NextAuth(authConfig);
 
 export default auth((req: any)=>{
   const { nextUrl } = req;
-  const isLoggedIn = req.auth;
-  const role = req?.auth.user.role;
-  console.log(req.auth, "jefdkasjfkasd")
+  const isLoggedIn = !!req?.auth;
+  const role = req?.auth?.user?.role;
   const isOnDashboard = nextUrl.pathname.startsWith('/dash');
-  if(isOnDashboard){
-      if(isLoggedIn) return true;
-      return false;
+  const isOnProduct = nextUrl.pathname.startsWith('/product')
+
+  if(isLoggedIn && role=='admin' && !isOnDashboard ){
+    return Response.redirect(new URL('/dash',nextUrl));
   }
-  else if(isLoggedIn){
-      return Response.redirect(new URL('/dash',nextUrl))
+ else if(!isLoggedIn && (isOnProduct || isOnDashboard)){
+    return Response.redirect(new URL('/login',nextUrl));
   }
-  return true;
+  else if(isLoggedIn && role=='user' && !isOnProduct){
+    return Response.redirect(new URL('/product',nextUrl));
+  }
+
 })
  
-// export default NextAuth(authConfig).  auth;
+// export default NextAuth(authConfig).auth;
 
 
 export const config = {
